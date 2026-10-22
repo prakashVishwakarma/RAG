@@ -1,0 +1,142 @@
+[
+  {
+    "question": "How many paid annual leave days do employees get per year?",
+    "expected_text": "18 paid annual leave days",
+    "source": "leave_policy.pdf"
+  },
+  {
+    "question": "How many unused annual leave days can be carried forward to next year?",
+    "expected_text": "carried forward up to a maximum of 10 days",
+    "source": "leave_policy.pdf"
+  },
+  {
+    "question": "When does leave above the carry-forward limit expire?",
+    "expected_text": "expires on December 31",
+    "source": "leave_policy.pdf"
+  },
+  {
+    "question": "How many sick leave days do employees get?",
+    "expected_text": "10 sick leave days per calendar year",
+    "source": "leave_policy.pdf"
+  },
+  {
+    "question": "When can a medical certificate be requested for sick leave?",
+    "expected_text": "more than 2 consecutive working days",
+    "source": "leave_policy.pdf"
+  },
+  {
+    "question": "How many casual leaves can an employee take?",
+    "expected_text": "6 casual leave days",
+    "source": "leave_policy.pdf"
+  },
+  {
+    "question": "How far in advance should casual leave be requested?",
+    "expected_text": "at least one working day in advance",
+    "source": "leave_policy.pdf"
+  },
+  {
+    "question": "Where should employees submit leave requests?",
+    "expected_text": "submitted through the employee portal",
+    "source": "leave_policy.pdf"
+  },
+  {
+    "question": "Are public holidays during approved leave deducted from the leave balance?",
+    "expected_text": "not deducted from the employee's leave balance",
+    "source": "leave_policy.pdf"
+  },
+  {
+    "question": "Who has to approve business travel before booking?",
+    "expected_text": "approved by the employee's reporting manager before booking",
+    "source": "travel_policy.pdf"
+  },
+  {
+    "question": "What extra approval is needed for travel outside India?",
+    "expected_text": "Travel outside India additionally requires approval",
+    "source": "travel_policy.pdf"
+  },
+  {
+    "question": "How early should I submit a request for domestic travel?",
+    "expected_text": "at least 5 working days before planned domestic travel",
+    "source": "travel_policy.pdf"
+  },
+  {
+    "question": "When is domestic air travel allowed?",
+    "expected_text": "would normally exceed 8 hours",
+    "source": "travel_policy.pdf"
+  },
+  {
+    "question": "What is the hotel allowance for domestic travel?",
+    "expected_text": "INR 4,000 per night",
+    "source": "travel_policy.pdf"
+  },
+  {
+    "question": "What is the meal allowance per day for domestic travel?",
+    "expected_text": "INR 900 per full travel day",
+    "source": "travel_policy.pdf"
+  },
+  {
+    "question": "How soon after a trip must travel expenses be submitted?",
+    "expected_text": "after returning from the trip",
+    "source": "travel_policy.pdf"
+  },
+  {
+    "question": "Above what amount are receipts required for expenses?",
+    "expected_text": "individual expenses above INR 1,000",
+    "source": "travel_policy.pdf"
+  },
+  {
+    "question": "Can alcohol be claimed as a travel expense?",
+    "expected_text": "Alcoholic beverages and personal entertainment expenses are not reimbursable",
+    "source": "travel_policy.pdf"
+  },
+  {
+    "question": "How long must I work at the company before I can request work from home?",
+    "expected_text": "completed at least 30 days",
+    "source": "wfh_policy.pdf"
+  },
+  {
+    "question": "How many work from home days are allowed per month?",
+    "expected_text": "up to 8 days per calendar month",
+    "source": "wfh_policy.pdf"
+  },
+  {
+    "question": "What is the maximum number of consecutive WFH days?",
+    "expected_text": "maximum of 3 consecutive work-from-home days",
+    "source": "wfh_policy.pdf"
+  },
+  {
+    "question": "What are the standard working hours?",
+    "expected_text": "9:30 AM to 6:30 PM",
+    "source": "wfh_policy.pdf"
+  },
+  {
+    "question": "Can I use a public computer to access company systems?",
+    "expected_text": "must not use public computers",
+    "source": "wfh_policy.pdf"
+  },
+  {
+    "question": "When should employees use the company VPN?",
+    "expected_text": "use the company VPN",
+    "source": "wfh_policy.pdf"
+  },
+  {
+    "question": "What is the maternity leave policy?",
+    "expected_text": null,
+    "source": null
+  },
+  {
+    "question": "What is the company dress code?",
+    "expected_text": null,
+    "source": null
+  },
+  {
+    "question": "How much internet reimbursement do WFH employees get?",
+    "expected_text": null,
+    "source": null
+  },
+  {
+    "question": "What is the notice period for resignation?",
+    "expected_text": null,
+    "source": null
+  }
+]

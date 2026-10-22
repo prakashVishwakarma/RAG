@@ -104,11 +104,11 @@ For your **first project**, keep the stack deliberately small.
 | --- | --- | --- |
 | Language | Python 3.11/3.12 | Application |
 | Framework | LangChain | RAG orchestration |
-| LLM | OpenAI GPT model | Answer generation |
-| Embeddings | OpenAI embeddings | Convert text → vectors |
+| LLM | Groq (Llama model) | Answer generation |
+| Embeddings | Jina embeddings | Convert text → vectors |
 | Vector DB | Chroma | Store/search vectors locally |
 | Documents | PDF/TXT | Knowledge source |
-| Environment | `venv` or `uv` | Python environment |
+| Environment | `uv` | Python environment & package manager |
 
 ### LangChain vs external components
 
@@ -121,8 +121,8 @@ This distinction is important.
 | Text splitter | LangChain |
 | Embedding interface | LangChain |
 | Vector store interface | LangChain |
-| OpenAI model | External service |
-| OpenAI embedding model | External service |
+| Groq LLM | External service |
+| Jina embedding model | External service |
 | Chroma database | External vector database |
 
 LangChain essentially connects these components together.
@@ -191,7 +191,8 @@ basic-rag/
 │
 ├── .env
 ├── .gitignore
-├── requirements.txt
+├── pyproject.toml
+├── uv.lock
 │
 ├── ingest.py
 ├── rag.py
@@ -207,12 +208,24 @@ basic-rag/
 ├── ingest.py
 ├── rag.py
 ├── .env
-└── requirements.txt
+└── pyproject.toml
 ```
 
 ---
 
 # 5. Step 1 — Create the project
+
+### Install uv (one time)
+
+```bash
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Restart the terminal and verify:
+
+```bash
+uv --version
+```
 
 ### Windows
 
@@ -220,25 +233,38 @@ basic-rag/
 mkdir basic-rag
 cd basic-rag
 
-python -m venv .venv
+uv init
+uv venv
 .venv\Scripts\activate
 ```
+
+`uv init` creates `pyproject.toml`, and `uv venv` creates the `.venv` virtual environment.
 
 Install the required packages:
 
 ```bash
-pip install -U langchain langchain-openai langchain-chroma langchain-community pypdf python-dotenv
+uv add langchain langchain-groq langchain-chroma langchain-community pypdf python-dotenv
 ```
 
-You can save them:
+- `langchain-groq` → the LLM (Groq) that generates answers
+- `langchain-community` → document loaders and the Jina embeddings integration
+
+`uv add` installs the packages into `.venv` and records them in `pyproject.toml` and `uv.lock`, so there is no need for `pip freeze > requirements.txt`.
+
+To recreate the environment later (for example, after cloning the repo):
 
 ```bash
-pip freeze > requirements.txt
+uv sync
 ```
 
 ---
 
-# 6. Step 2 — Configure the API key
+# 6. Step 2 — Configure the API keys
+
+Get free API keys from:
+
+- Jina: [jina.ai](https://jina.ai/) (for embeddings)
+- Groq: [console.groq.com/keys](https://console.groq.com/keys) (for the LLM)
 
 Create:
 
@@ -249,7 +275,8 @@ Create:
 Add:
 
 ```
-OPENAI_API_KEY=your_api_key_here
+JINA_API_KEY=your_jina_api_key_here
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
 Never commit `.env` to Git.
@@ -321,7 +348,7 @@ for doc in documents[:2]:
 Run:
 
 ```bash
-python ingest.py
+uv run ingest.py
 ```
 
 You should see text extracted from your PDFs.
@@ -404,7 +431,7 @@ print(f"Number of chunks: {len(chunks)}")
 You may need to install:
 
 ```bash
-pip install -U langchain-text-splitters
+uv add langchain-text-splitters
 ```
 
 ---
@@ -481,12 +508,14 @@ For example:
 Create:
 
 ```python
-from langchain_openai import OpenAIEmbeddings
+from langchain_community.embeddings import JinaEmbeddings
 
-embeddings = OpenAIEmbeddings(
-    model="text-embedding-3-small"
+embeddings = JinaEmbeddings(
+    model_name="jina-embeddings-v3"
 )
 ```
+
+`JinaEmbeddings` reads `JINA_API_KEY` from the environment (loaded from `.env` by `load_dotenv()`).
 
 The embedding model is **not the same thing as the LLM**.
 
@@ -571,7 +600,7 @@ from dotenv import load_dotenv
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
+from langchain_community.embeddings import JinaEmbeddings
 from langchain_chroma import Chroma
 
 load_dotenv()
@@ -596,8 +625,8 @@ chunks = splitter.split_documents(documents)
 print(f"Created {len(chunks)} chunks")
 
 # 3. Create embeddings
-embeddings = OpenAIEmbeddings(
-    model="text-embedding-3-small"
+embeddings = JinaEmbeddings(
+    model_name="jina-embeddings-v3"
 )
 
 # 4. Store in Chroma
@@ -613,7 +642,7 @@ print("Documents stored in Chroma")
 Run:
 
 ```bash
-python ingest.py
+uv run ingest.py
 ```
 
 If successful:
@@ -636,10 +665,10 @@ Load your Chroma database:
 
 ```python
 from langchain_chroma import Chroma
-from langchain_openai import OpenAIEmbeddings
+from langchain_community.embeddings import JinaEmbeddings
 
-embeddings = OpenAIEmbeddings(
-    model="text-embedding-3-small"
+embeddings = JinaEmbeddings(
+    model_name="jina-embeddings-v3"
 )
 
 vectorstore = Chroma(
@@ -750,15 +779,15 @@ You're telling the LLM:
 Use:
 
 ```python
-from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 
-llm = ChatOpenAI(
-    model="YOUR_CURRENT_SUPPORTED_MODEL",
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
     temperature=0
 )
 ```
 
-The exact model name should be selected based on the models available to your OpenAI account/API at the time you build the project.
+`ChatGroq` reads `GROQ_API_KEY` from the environment. Check [console.groq.com/docs/models](https://console.groq.com/docs/models) for the models currently available, and swap the model name if needed.
 
 For a RAG experiment:
 
@@ -813,7 +842,8 @@ Your beginner version can therefore be:
 from dotenv import load_dotenv
 
 from langchain_chroma import Chroma
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_community.embeddings import JinaEmbeddings
+from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 
 load_dotenv()
@@ -822,8 +852,8 @@ load_dotenv()
 # 1. Embedding model
 # -----------------------------
 
-embeddings = OpenAIEmbeddings(
-    model="text-embedding-3-small"
+embeddings = JinaEmbeddings(
+    model_name="jina-embeddings-v3"
 )
 
 # -----------------------------
@@ -868,8 +898,8 @@ Answer:
 # 5. LLM
 # -----------------------------
 
-llm = ChatOpenAI(
-    model="YOUR_CURRENT_SUPPORTED_MODEL",
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
     temperature=0
 )
 
@@ -919,7 +949,7 @@ while True:
 Run:
 
 ```bash
-python rag.py
+uv run rag.py
 ```
 
 Now you have a basic RAG system.
@@ -1481,7 +1511,7 @@ This is the mental model I recommend you memorize.
    Documents        Retrieval          LLM
         │               │                │
         ▼               ▼                ▼
-    PyPDF          Chroma DB        OpenAI API
+    PyPDF          Chroma DB        Groq API
 ```
 
 LangChain provides standardized interfaces that allow you to connect these components.
