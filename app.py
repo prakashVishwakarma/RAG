@@ -1,15 +1,42 @@
-from rag import ask_question
+"""Streamlit chat app for the HR Policy Assistant.
 
-print("Company Policy Assistant (type 'exit' to quit)")
+Run with:  streamlit run app.py
+"""
 
-while True:
-    question = input("\nYour question: ").strip()
+import streamlit as st
 
-    if question.lower() in ("exit", "quit"):
-        break
+from hr_assistant.pipeline import ask, build_hr_assistant
 
-    if question == "":
-        continue
+st.set_page_config(page_title="HR Policy Assistant", page_icon="🤖")
+st.title("🤖 HR Policy Assistant")
+st.caption("Ask me anything about the company policy documents.")
 
-    answer = ask_question(question)
-    print(f"\nAnswer: {answer}")
+
+@st.cache_resource(show_spinner="Setting up the assistant (only happens once)...")
+def get_assistant():
+    return build_hr_assistant()
+
+
+assistant = get_assistant()
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Show the past conversation
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Get a new question from the user
+question = st.chat_input("Ask a question about company policy...")
+
+if question:
+    st.session_state.messages.append({"role": "user", "content": question})
+    with st.chat_message("user"):
+        st.markdown(question)
+
+    with st.chat_message("assistant"):
+        with st.spinner("Thinking..."):
+            answer = ask(assistant, question)
+        st.markdown(answer)
+    st.session_state.messages.append({"role": "assistant", "content": answer})

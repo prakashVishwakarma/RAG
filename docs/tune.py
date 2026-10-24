@@ -1,15 +1,25 @@
+"""Tune chunk_size / chunk_overlap / k against docs/eval_set.json.
+
+Run from the project root:
+  python docs/tune.py
+"""
+
 import json
+from pathlib import Path
 
 from langchain_chroma import Chroma
-from langchain_community.embeddings import JinaEmbeddings
 
-import config
-from ingest import load_documents, split_documents
+from hr_assistant import config
+from hr_assistant.document_loader import load_documents
+from hr_assistant.embeddings import get_embeddings_model
+from hr_assistant.splitter import split_into_chunks
 
 # Settings to try
 CHUNK_SIZES = [300, 500, 800, 1000]
 CHUNK_OVERLAPS = [0, 100, 200]
 K_VALUES = [2, 3, 4, 6]
+
+EVAL_SET_PATH = Path(__file__).resolve().parent / "eval_set.json"
 
 
 def normalize(text):
@@ -19,7 +29,7 @@ def normalize(text):
 
 def main():
     # 1. Load the questions that the documents can answer
-    with open("eval_set.json", encoding="utf-8") as file:
+    with open(EVAL_SET_PATH, encoding="utf-8") as file:
         eval_set = json.load(file)
 
     questions = []
@@ -36,7 +46,7 @@ def main():
             raise SystemExit(f"Expected text not found in the PDFs: {item['expected_text']!r}")
 
     # 3. Embed the questions once and reuse them for every setting
-    embeddings = JinaEmbeddings(model_name=config.EMBEDDING_MODEL)
+    embeddings = get_embeddings_model()
     question_texts = [item["question"] for item in questions]
     question_vectors = embeddings.embed_documents(question_texts)
 
@@ -48,7 +58,7 @@ def main():
             if chunk_overlap >= chunk_size:
                 continue
 
-            chunks = split_documents(documents, chunk_size, chunk_overlap)
+            chunks = split_into_chunks(documents, chunk_size, chunk_overlap)
 
             # No persist_directory → kept in memory, the real chroma_db is untouched
             test_store = Chroma(
@@ -96,7 +106,11 @@ def main():
         )
 
     for r in results:
-        if (r["chunk_size"], r["chunk_overlap"], r["k"]) == (config.CHUNK_SIZE, config.CHUNK_OVERLAP, config.TOP_K):
+        if (r["chunk_size"], r["chunk_overlap"], r["k"]) == (
+            config.CHUNK_SIZE,
+            config.CHUNK_OVERLAP,
+            config.TOP_K_RESULTS,
+        ):
             print()
             print(
                 f"Current config: chunk_size={r['chunk_size']}, overlap={r['chunk_overlap']}, k={r['k']} "

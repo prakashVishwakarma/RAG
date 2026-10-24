@@ -6,35 +6,44 @@ A beginner RAG (Retrieval-Augmented Generation) project that answers questions a
 - **Vector database:** Chroma (stored locally in `chroma_db/`)
 - **LLM:** Groq (`openai/gpt-oss-20b`)
 - **Framework:** LangChain
+- **UI:** Streamlit
 
 ## How it works
 
 ```
-PDFs → split into chunks → Jina embeddings → Chroma     (ingest.py)
+PDFs → split into chunks → Jina embeddings → Chroma     (hr_assistant/pipeline)
 
-Question → find similar chunks in Chroma → Groq LLM → Answer     (rag.py)
+Question → find similar chunks in Chroma → Groq LLM → Answer
 ```
 
 ## Project structure
 
 ```
-data/          Policy PDFs (the knowledge source)
-chroma_db/     Vector database (created by ingest.py)
-config.py      All settings (models, chunk size, paths, top-k)
-eval_set.json  Test questions with the text their answers come from
-tune.py        Finds the best chunk_size, chunk_overlap and k using eval_set.json
-ingest.py      Loads, splits, embeds and stores the PDFs
-rag.py         Retrieves relevant chunks and generates an answer
-app.py         Interactive question-answer loop in the terminal
+data/                 Policy PDFs (the knowledge source)
+chroma_db/            Vector database (created on first run)
+hr_assistant/         Package modules (load, split, embed, store, LLM, pipeline)
+docs/                 Notes, eval set, and tuning script
+assets/               Images / diagrams (optional)
+logs/                 Run logs (future)
+NOTES/                Personal notes (optional)
+app.py                Streamlit chat UI
+main.py               Terminal CLI demo
+requirements.txt      Python dependencies
 ```
 
 ## Setup
 
-1. Install [uv](https://docs.astral.sh/uv/).
+1. Create and activate a virtual environment:
+
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\activate
+   ```
+
 2. Install dependencies:
 
    ```bash
-   uv sync
+   pip install -r requirements.txt
    ```
 
 3. Create a `.env` file with your API keys:
@@ -46,13 +55,13 @@ app.py         Interactive question-answer loop in the terminal
 
    Get free keys from [jina.ai](https://jina.ai/) and [console.groq.com/keys](https://console.groq.com/keys).
 
-4. (Optional) Override any setting from `config.py` by adding it to `.env`:
+4. (Optional) Override settings in `.env`:
 
    ```
    LLM_MODEL=openai/gpt-oss-120b
    EMBEDDING_MODEL=jina-embeddings-v2-base-en
-   CHUNK_SIZE=1000
-   CHUNK_OVERLAP=200
+   CHUNK_SIZE=300
+   CHUNK_OVERLAP=100
    TOP_K=4
    DATA_DIR=data
    CHROMA_DIR=./chroma_db
@@ -61,23 +70,27 @@ app.py         Interactive question-answer loop in the terminal
 ## Usage
 
 1. Put your PDF files in `data/`.
-2. Build the vector database:
+2. Start the Streamlit chat app:
 
    ```bash
-   uv run ingest.py
+   streamlit run app.py
    ```
 
-   Running it again only adds chunks that aren't stored yet.
+   On first run the app builds/syncs `chroma_db/` from the PDFs automatically.
 
-3. Ask questions:
+3. Or run the terminal demo:
 
    ```bash
-   uv run app.py
+   python main.py
    ```
 
-   Or run a single test question with `uv run rag.py`.
+4. (Optional) Tune retrieval settings:
+
+   ```bash
+   python docs/tune.py
+   ```
 
 ## Notes
 
-- If you change the embedding model, delete `chroma_db/` and run `ingest.py` again.
-- If you edit or delete a PDF, delete `chroma_db/` and run `ingest.py` again (old chunks are not removed automatically).
+- If you change the embedding model, delete `chroma_db/` and run the app again.
+- Editing or deleting a PDF is handled on the next run (outdated chunks are removed; new ones are added).

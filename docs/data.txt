@@ -1,0 +1,218 @@
+Number of chunks: 12
+
+Shared metadata (identical for every chunk):
+  producer      : ReportLab PDF Library - (opensource)
+  creator       : (unspecified)
+  creationdate  : 2026-10-04T09:59:15+00:00
+  moddate       : 2026-10-04T09:59:15+00:00
+  author        : (anonymous)
+  title         : (anonymous)
+  subject       : (unspecified)
+  keywords      : (empty)
+  trapped       : /False
+  total_pages   : 2
+
+Note: "•" below replaces the "\x7f" bullet character from the PDF.
+
+
+################################################################################
+#  data\leave_policy.pdf
+################################################################################
+
+================================================================================
+Chunk 1  |  source: data\leave_policy.pdf  |  page: 0  |  page_label: 1
+================================================================================
+Leave Policy
+AcmeNova Technologies Pvt. Ltd. | Policy ID: HR-LEAVE-001
+1. Purpose
+This Leave Policydefines the fictional leave rules for employees of AcmeNova Technologies Pvt. Ltd. It
+is intended to provide a simple and consistent framework for requesting and approvingleave.
+2. Annual Leave Entitlement
+ • Employees receive 18 paid annual leave days per calendar year.
+ • New employees receive leave on a prorated basis according to their joining month.
+ • Unused annual leave may be carried forward up to a maximum of 10 days into the next calendar
+ year.
+• Any balance above the carry-forward limit expires on December 31.
+ 
+3. Sick Leave
+ • Employees receive 10 sick leave days per calendar year.
+ • Employees should inform their manager before the scheduled working time whenever reasonably
+ possible.
+• A medical certificate may be requested for sick leave of more than 2 consecutive working days.
+ 
+4. Casual Leave
+ • Employees may use up to 6 casual leave days per calendar year.
+
+================================================================================
+Chunk 2  |  source: data\leave_policy.pdf  |  page: 0  |  page_label: 1
+================================================================================
+possible.
+• A medical certificate may be requested for sick leave of more than 2 consecutive working days.
+ 
+4. Casual Leave
+ • Employees may use up to 6 casual leave days per calendar year.
+ • Casual leave is intended for short personal requirements and unexpected situations.
+ • Casual leave should normally be requested at least one working day in advance.
+ 
+5. Leave RequestProcess
+ • Leave requests must be submitted through the employee portal.
+ • The employee's reporting manager is responsible for approving or rejecting the request.
+ • Employees should not assume that leave is approved until the request shows an approved status.
+ • For emergencies, employees may notify their manager first and submit the formal request afterward.
+ 
+6. Public Holidays
+Public holidays are maintained in the annual company holiday calendar. Public holidays that fall during
+approved leave are not deducted from the employee's leave balance.
+7. Example
+
+================================================================================
+Chunk 3  |  source: data\leave_policy.pdf  |  page: 0  |  page_label: 1
+================================================================================
+Public holidays are maintained in the annual company holiday calendar. Public holidays that fall during
+approved leave are not deducted from the employee's leave balance.
+7. Example
+An employee with 8 unused annual leave days at the end of December may carry all 8 days into the next
+year. An employee with 14 unused days may carry forward only 10 days, subject to company rules.
+
+================================================================================
+Chunk 4  |  source: data\leave_policy.pdf  |  page: 1  |  page_label: 2
+================================================================================
+Document Status: Dummy / Training Data only. This policy is fictional and created for RAG testing.
+
+
+################################################################################
+#  data\travel_policy.pdf
+################################################################################
+
+================================================================================
+Chunk 5  |  source: data\travel_policy.pdf  |  page: 0  |  page_label: 1
+================================================================================
+Business Travel Policy
+AcmeNova Technologies Pvt. Ltd. | Policy ID: FIN-TRAVEL-001
+1. Purpose
+This Travel Policy defines fictional rules for business travel undertaken on behalf of AcmeNova
+Technologies Pvt. Ltd. It covers approval, transportation, accommodation, meals, and expense claims.
+2. Travel Approval
+ • All business travel must be approved by the employee's reporting manager before booking.
+ • Travel outside India additionally requires approval from the department head.
+ • Employees should submit a travel request at least 5 working days before planned domestic travel
+ when practical.
+• Emergency business travel may follow an expedited approval process.
+ 
+3. Transportation
+ • Domestic air travel is permitted for journeys where the total travel time by rail would normally exceed
+ 8 hours.
+• Economy class is the standard class for domestic flights.
+ • AC Chair Car or AC 2-Tier rail travel may be selected based on journey duration and availability.
+
+================================================================================
+Chunk 6  |  source: data\travel_policy.pdf  |  page: 0  |  page_label: 1
+================================================================================
+8 hours.
+• Economy class is the standard class for domestic flights.
+ • AC Chair Car or AC 2-Tier rail travel may be selected based on journey duration and availability.
+ • Local transportation may include approved taxis, app-based cabs, or public transportation.
+ 
+4. Accommodation
+ • Employees may select company-approved hotels within the applicable city allowance.
+ • The standard hotel allowance for domestic travel is INR 4,000 per night including applicable taxes.
+ • Higher accommodation costs require prior approval from the department head.
+ • Personal upgrades and premium services are not reimbursable unless specifically approved.
+ 
+5. Meals
+ • Employees may claim reasonable meal expenses during approved business travel.
+ • The standard domestic meal allowance is INR 900 per full travel day.
+ • Alcoholic beverages and personal entertainment expenses are not reimbursable.
+ • Meal receipts should be retained when required by theexpense system.
+ 
+6. Expense Claims
+
+================================================================================
+Chunk 7  |  source: data\travel_policy.pdf  |  page: 0  |  page_label: 1
+================================================================================
+• Alcoholic beverages and personal entertainment expenses are not reimbursable.
+ • Meal receipts should be retained when required by the expense system.
+ 
+6. Expense Claims
+ • Travel expenses should normally be submitted within 10 calendardays after returning from the trip.
+ • Receipts are required for individual expenses above INR 1,000.
+
+================================================================================
+Chunk 8  |  source: data\travel_policy.pdf  |  page: 1  |  page_label: 2
+================================================================================
+• Approved expenses are reimbursed through the normal payroll or employee-expense process.
+ • Expenses that are personal, unsupported, or outside approved limits may be rejected.
+ 
+7. Example
+If an employee travels to Pune for three full business days, approved hotel, transportation, and eligible
+meal expenses may be claimed according to the limits above.
+Document Status: Dummy / Training Data only. This policy is fictional and created for RAG testing.
+
+
+################################################################################
+#  data\wfh_policy.pdf
+################################################################################
+
+================================================================================
+Chunk 9  |  source: data\wfh_policy.pdf  |  page: 0  |  page_label: 1
+================================================================================
+Work FromHome Policy
+AcmeNova Technologies Pvt. Ltd. | Policy ID: HR-WFH-001
+1. Purpose
+This Work From Home Policy defines fictional guidelines for employees who are permitted towork
+remotely. The policy focuses on availability, security, productivity, and communication.
+2. Eligibility
+ • Employees who have completed at least 30 days with thecompany may request regular
+ work-from-home days.
+• Approval depends on the employee's role, project requirements, performance, and manager
+ availability.
+• Rolesrequiring physical presence may not be eligible for routine work from home.
+ 
+3. Work From Home Allowance
+ • Eligible employees may work from home up to 8 days per calendar month.
+ • A maximum of 3 consecutive work-from-home days may normally be requested.
+ • Additional remote days require approval from the department head.
+ 
+4. Working Hours and Availability
+ • Standard working hours are 9:30 AM to 6:30 PM, Monday through Friday.
+
+================================================================================
+Chunk 10  |  source: data\wfh_policy.pdf  |  page: 0  |  page_label: 1
+================================================================================
+• Additional remote days require approval from the department head.
+ 
+4. Working Hours and Availability
+ • Standard working hours are 9:30 AM to 6:30 PM, Monday through Friday.
+ • Employees working remotely must remain reachable through approved communication tools during
+ working hours.
+• Employees should attend scheduled meetings with an appropriate professional setup.
+ • Any expected delay or unavailability should be communicated to the reporting manager.
+ 
+5. Equipment and Internet
+ • Employees are responsible for maintaining a reliable internet connection at their remote work
+ location.
+• Company laptops and approved devices must be used for accessing confidential company systems.
+ • Employees must report damaged or malfunctioning company equipment to IT support.
+ 
+6. Information Security
+ • Employees must not use public computers to access company systems.
+ • Confidential documents must not be printed or shared with unauthorized persons.
+
+================================================================================
+Chunk 11  |  source: data\wfh_policy.pdf  |  page: 0  |  page_label: 1
+================================================================================
+6. Information Security
+ • Employees must not use public computers to access company systems.
+ • Confidential documents must not be printed or shared with unauthorized persons.
+ • Employees should use the company VPN when required by the relevant application or security
+ policy.
+
+================================================================================
+Chunk 12  |  source: data\wfh_policy.pdf  |  page: 1  |  page_label: 2
+================================================================================
+• Screens containing confidential information should not be visible to visitors or other unauthorized
+ individuals.
+7. Exceptions
+Urgent business requirements may require an employee to work from the office even when a
+work-from-home request was previously approved.
+Document Status: Dummy / Training Data only. This policy is fictional and created for RAG testing.
