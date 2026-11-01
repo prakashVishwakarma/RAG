@@ -10,6 +10,12 @@ load_dotenv()
 DATA_DIR = os.getenv("DATA_DIR", "data")
 CHROMA_DIR = os.getenv("CHROMA_DIR", "./chroma_db")
 
+# TRACING
+LANGSMITH_TRACING = os.getenv("LANGSMITH_TRACING", "false")
+LANGSMITH_ENDPOINT = os.getenv("LANGSMITH_ENDPOINT")
+LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
+LANGSMITH_PROJECT = os.getenv("LANGSMITH_PROJECT")
+
 # Models
 # Changing EMBEDDING_MODEL requires deleting CHROMA_DIR and rebuilding the store
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL", "jina-embeddings-v2-base-en")

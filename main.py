@@ -3,13 +3,16 @@
 Run with:  python main.py
 """
 
+from hr_assistant.logger import get_logger
 from hr_assistant.pipeline import ask, build_hr_assistant
+
+logger = get_logger(__name__)
 
 
 def main():
-    print("Building the HR policy assistant...")
+    logger.info("=== CLI run started ===")
     assistant = build_hr_assistant()
-    print("Assistant ready!\n")
+    logger.info("Assistant ready")
 
     demo_questions = [
         "How many casual leaves can an employee take?",
@@ -18,13 +21,11 @@ def main():
     ]
 
     for question in demo_questions:
-        print("=" * 60)
-        print("QUESTION:", question)
-        print("-" * 60)
+        logger.info("QUESTION: %s", question)
         answer = ask(assistant, question)
-        print("ANSWER:", answer)
-        print("=" * 60)
-        print()
+        logger.info("ANSWER: %s", answer)
+
+    logger.info("=== CLI run finished ===")
 
 
 if __name__ == "__main__":

@@ -5,6 +5,9 @@ from pathlib import Path
 from langchain_community.document_loaders import PyPDFLoader
 
 from hr_assistant import config
+from hr_assistant.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def is_continuation(previous_line, line):
@@ -40,6 +43,7 @@ def clean_text(text):
 def load_documents(data_dir: str = None):
     """Load every PDF in the data folder and clean its text."""
     folder = Path(data_dir or config.DATA_DIR)
+    logger.info("Loading documents from '%s'", folder)
     documents = []
 
     for pdf_file in folder.glob("*.pdf"):
@@ -49,6 +53,8 @@ def load_documents(data_dir: str = None):
 
     # Stop early, otherwise vector_store sync would delete every stored chunk
     if len(documents) == 0:
+        logger.error("No PDFs found in '%s'. Nothing to ingest.", folder)
         raise SystemExit(f"No PDFs found in '{folder}'. Nothing to ingest.")
 
+    logger.info("Loaded %d page(s)", len(documents))
     return documents

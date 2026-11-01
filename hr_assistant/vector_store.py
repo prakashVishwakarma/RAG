@@ -7,6 +7,9 @@ from langchain_chroma import Chroma
 
 from hr_assistant import config
 from hr_assistant.embeddings import get_embeddings_model
+from hr_assistant.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def _chunk_id(chunk):
@@ -23,6 +26,7 @@ def vector_store_exists() -> bool:
 
 def load_vector_store():
     """Open an existing Chroma database from disk."""
+    logger.info("Loading Chroma database from '%s'", config.CHROMA_DIR)
     embeddings_model = get_embeddings_model()
     return Chroma(
         persist_directory=config.CHROMA_DIR,
@@ -32,6 +36,11 @@ def load_vector_store():
 
 def build_vector_store(chunks):
     """Embed chunks and sync them into Chroma (add new, remove outdated)."""
+    logger.info(
+        "Embedding %d chunk(s) and syncing to Chroma at '%s'...",
+        len(chunks),
+        config.CHROMA_DIR,
+    )
     unique_chunks = {}
     for chunk in chunks:
         unique_chunks[_chunk_id(chunk)] = chunk
@@ -72,15 +81,17 @@ def build_vector_store(chunks):
     if len(outdated_ids) > 0:
         vector_store.delete(ids=outdated_ids)
 
-    print(f"Added {len(new_documents)} new chunks")
-    print(f"Skipped {len(existing_ids)} chunks that were already stored")
-    print(f"Removed {len(outdated_ids)} outdated chunks")
+    logger.info("Added %d new chunks", len(new_documents))
+    logger.info("Skipped %d chunks that were already stored", len(existing_ids))
+    logger.info("Removed %d outdated chunks", len(outdated_ids))
 
     return vector_store
 
 
 def get_retriever(vector_store, k=None):
     """Return a retriever that fetches the top-k most similar chunks."""
+    top_k = k if k is not None else config.TOP_K_RESULTS
+    logger.info("Creating retriever with top_k=%d", top_k)
     return vector_store.as_retriever(
-        search_kwargs={"k": k if k is not None else config.TOP_K_RESULTS}
+        search_kwargs={"k": top_k}
     )
