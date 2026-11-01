@@ -16,6 +16,10 @@ LANGSMITH_ENDPOINT = os.getenv("LANGSMITH_ENDPOINT")
 LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
 LANGSMITH_PROJECT = os.getenv("LANGSMITH_PROJECT")
 
+# GUARD MODEL
+
+GUARD_MODEL_NAME = "openai/gpt-oss-safeguard-20b"
+
 # Models
 # Changing EMBEDDING_MODEL requires deleting CHROMA_DIR and rebuilding the store
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL", "jina-embeddings-v2-base-en")

@@ -16,6 +16,7 @@ from hr_assistant.vector_store import (
     load_vector_store,
     vector_store_exists,
 )
+from hr_assistant.guardrails import REFUSAL_MESSAGE, check_input, check_output
 from hr_assistant.tracing import check_langsmith_tracing
 from hr_assistant.logger import get_logger
 
@@ -60,6 +61,13 @@ def build_hr_assistant():
 def ask(assistant, question: str) -> str:
     """Ask the assistant a question and return its answer as plain text."""
     logger.info("User question: %s", question)
+
+    # input guard - to get safe inputs
+
+    input_is_safe, _ = check_input(question)
+    if not input_is_safe:
+        return REFUSAL_MESSAGE
+
     docs = assistant["retriever"].invoke(question)
     logger.info("Retrieved %d chunk(s)", len(docs))
     for i, doc in enumerate(docs, start=1):
@@ -77,4 +85,10 @@ def ask(assistant, question: str) -> str:
     })
     answer = assistant["llm"].invoke(messages).content
     logger.info("Final answer: %s", answer)
+
+    # output guard - to check if agent gives safe answer
+    output_is_safe, _ = check_output(answer)
+    if not output_is_safe:
+        return REFUSAL_MESSAGE
+
     return answer
